@@ -108,7 +108,7 @@ def predict_labels():
   encoded_input = tokenizer(text, return_tensors='pt', truncation = True)
   output = model(**encoded_input)
   logits_array = output.logits.to('cpu').detach().numpy()[0]
-  pred = logits_array.argmax()
+  pred = int(logits_array.argmax())
 
   return jsonify({"prediction": pred}), 200
 
