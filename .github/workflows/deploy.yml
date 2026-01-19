@@ -33,7 +33,6 @@ jobs:
             max_instances: "4"
             ingress: all
             sa_email: bert-family-cloudrun-sa@bert-family.iam.gserviceaccount.com
-            allow_unauthenticated: "true"
 
     steps:
       - name: Checkout code
@@ -86,8 +85,7 @@ jobs:
             --max-instances=${{ matrix.max_instances }} \
             --min-instances=${{ matrix.min_instances }} \
             --ingress=${{ matrix.ingress }} \
-            --execution-environment=gen2 \
-            $( [ "${{ matrix.allow_unauthenticated }}" = "true" ] && echo "--allow-unauthenticated" || echo "" )
+            --execution-environment=gen2
 
       - name: Post-deploy URL
         run: |
