@@ -19,7 +19,7 @@ jobs:
         include:
           - service_name: ag-news-bert-base-uncased-seed-1
             region: us-central1
-            project_id: dm-agents
+            project_id: bert-family
             repo: bert-family-prod          # <-- CAMBIA esto al nombre real de tu repo en Artifact Registry
             image_name: ag-news-bert-base-uncased-seed-1
             image_tag: 1.0.0               # <-- puedes cambiar a ${{ github.sha }} si quieres
