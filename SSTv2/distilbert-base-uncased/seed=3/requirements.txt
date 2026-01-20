@@ -1,0 +1,7 @@
+flask==2.2.5
+gunicorn==20.1.0
+google-cloud-storage==2.16.0
+transformers==4.56.1
+pandas==2.3.2
+openai==1.95.1
+python-dotenv==1.0.1

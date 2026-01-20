@@ -1,11 +1,14 @@
-name: Deploy AG News BERT API
+name: Deploy All NLP APIs to Cloud Run (36 services)
 
 on:
   push:
     branches: [ main ]
     paths:
       - ".github/workflows/deploy.yml"
-      - "AG_News/bert-base-uncased/seed=1/**"
+      - "AG_News/**"
+      - "DB_Pedia/**"
+      - "IMDB/**"
+      - "SSTv2/**"
 
 jobs:
   deploy:
@@ -15,15 +18,623 @@ jobs:
 
     strategy:
       fail-fast: false
+      max-parallel: 36
       matrix:
         include:
+          # =========================
+          # AG_News (9)
+          # =========================
           - service_name: ag-news-bert-base-uncased-seed-1
             region: us-central1
             project_id: bert-family
-            repo: bert-family-prod          # <-- CAMBIA esto al nombre real de tu repo en Artifact Registry
+            repo: bert-family-prod
             image_name: ag-news-bert-base-uncased-seed-1
-            image_tag: 1.0.0               # <-- puedes cambiar a ${{ github.sha }} si quieres
+            image_tag: 1.0.0
             context_path: AG_News/bert-base-uncased/seed=1
+            platform: linux/amd64
+            memory: 2Gi
+            cpu: "2"
+            concurrency: "32"
+            timeout: 300s
+            min_instances: "0"
+            max_instances: "4"
+            ingress: all
+            sa_email: bert-family-cloudrun-sa@bert-family.iam.gserviceaccount.com
+
+          - service_name: ag-news-bert-base-uncased-seed-2
+            region: us-central1
+            project_id: bert-family
+            repo: bert-family-prod
+            image_name: ag-news-bert-base-uncased-seed-2
+            image_tag: 1.0.0
+            context_path: AG_News/bert-base-uncased/seed=2
+            platform: linux/amd64
+            memory: 2Gi
+            cpu: "2"
+            concurrency: "32"
+            timeout: 300s
+            min_instances: "0"
+            max_instances: "4"
+            ingress: all
+            sa_email: bert-family-cloudrun-sa@bert-family.iam.gserviceaccount.com
+
+          - service_name: ag-news-bert-base-uncased-seed-3
+            region: us-central1
+            project_id: bert-family
+            repo: bert-family-prod
+            image_name: ag-news-bert-base-uncased-seed-3
+            image_tag: 1.0.0
+            context_path: AG_News/bert-base-uncased/seed=3
+            platform: linux/amd64
+            memory: 2Gi
+            cpu: "2"
+            concurrency: "32"
+            timeout: 300s
+            min_instances: "0"
+            max_instances: "4"
+            ingress: all
+            sa_email: bert-family-cloudrun-sa@bert-family.iam.gserviceaccount.com
+
+          - service_name: ag-news-distilbert-base-uncased-seed-1
+            region: us-central1
+            project_id: bert-family
+            repo: bert-family-prod
+            image_name: ag-news-distilbert-base-uncased-seed-1
+            image_tag: 1.0.0
+            context_path: AG_News/distilbert-base-uncased/seed=1
+            platform: linux/amd64
+            memory: 2Gi
+            cpu: "2"
+            concurrency: "32"
+            timeout: 300s
+            min_instances: "0"
+            max_instances: "4"
+            ingress: all
+            sa_email: bert-family-cloudrun-sa@bert-family.iam.gserviceaccount.com
+
+          - service_name: ag-news-distilbert-base-uncased-seed-2
+            region: us-central1
+            project_id: bert-family
+            repo: bert-family-prod
+            image_name: ag-news-distilbert-base-uncased-seed-2
+            image_tag: 1.0.0
+            context_path: AG_News/distilbert-base-uncased/seed=2
+            platform: linux/amd64
+            memory: 2Gi
+            cpu: "2"
+            concurrency: "32"
+            timeout: 300s
+            min_instances: "0"
+            max_instances: "4"
+            ingress: all
+            sa_email: bert-family-cloudrun-sa@bert-family.iam.gserviceaccount.com
+
+          - service_name: ag-news-distilbert-base-uncased-seed-3
+            region: us-central1
+            project_id: bert-family
+            repo: bert-family-prod
+            image_name: ag-news-distilbert-base-uncased-seed-3
+            image_tag: 1.0.0
+            context_path: AG_News/distilbert-base-uncased/seed=3
+            platform: linux/amd64
+            memory: 2Gi
+            cpu: "2"
+            concurrency: "32"
+            timeout: 300s
+            min_instances: "0"
+            max_instances: "4"
+            ingress: all
+            sa_email: bert-family-cloudrun-sa@bert-family.iam.gserviceaccount.com
+
+          - service_name: ag-news-roberta-base-seed-1
+            region: us-central1
+            project_id: bert-family
+            repo: bert-family-prod
+            image_name: ag-news-roberta-base-seed-1
+            image_tag: 1.0.0
+            context_path: AG_News/roberta-base/seed=1
+            platform: linux/amd64
+            memory: 2Gi
+            cpu: "2"
+            concurrency: "32"
+            timeout: 300s
+            min_instances: "0"
+            max_instances: "4"
+            ingress: all
+            sa_email: bert-family-cloudrun-sa@bert-family.iam.gserviceaccount.com
+
+          - service_name: ag-news-roberta-base-seed-2
+            region: us-central1
+            project_id: bert-family
+            repo: bert-family-prod
+            image_name: ag-news-roberta-base-seed-2
+            image_tag: 1.0.0
+            context_path: AG_News/roberta-base/seed=2
+            platform: linux/amd64
+            memory: 2Gi
+            cpu: "2"
+            concurrency: "32"
+            timeout: 300s
+            min_instances: "0"
+            max_instances: "4"
+            ingress: all
+            sa_email: bert-family-cloudrun-sa@bert-family.iam.gserviceaccount.com
+
+          - service_name: ag-news-roberta-base-seed-3
+            region: us-central1
+            project_id: bert-family
+            repo: bert-family-prod
+            image_name: ag-news-roberta-base-seed-3
+            image_tag: 1.0.0
+            context_path: AG_News/roberta-base/seed=3
+            platform: linux/amd64
+            memory: 2Gi
+            cpu: "2"
+            concurrency: "32"
+            timeout: 300s
+            min_instances: "0"
+            max_instances: "4"
+            ingress: all
+            sa_email: bert-family-cloudrun-sa@bert-family.iam.gserviceaccount.com
+
+          # =========================
+          # DB_Pedia (9)
+          # =========================
+          - service_name: db-pedia-bert-base-uncased-seed-1
+            region: us-central1
+            project_id: bert-family
+            repo: bert-family-prod
+            image_name: db-pedia-bert-base-uncased-seed-1
+            image_tag: 1.0.0
+            context_path: DB_Pedia/bert-base-uncased/seed=1
+            platform: linux/amd64
+            memory: 2Gi
+            cpu: "2"
+            concurrency: "32"
+            timeout: 300s
+            min_instances: "0"
+            max_instances: "4"
+            ingress: all
+            sa_email: bert-family-cloudrun-sa@bert-family.iam.gserviceaccount.com
+
+          - service_name: db-pedia-bert-base-uncased-seed-2
+            region: us-central1
+            project_id: bert-family
+            repo: bert-family-prod
+            image_name: db-pedia-bert-base-uncased-seed-2
+            image_tag: 1.0.0
+            context_path: DB_Pedia/bert-base-uncased/seed=2
+            platform: linux/amd64
+            memory: 2Gi
+            cpu: "2"
+            concurrency: "32"
+            timeout: 300s
+            min_instances: "0"
+            max_instances: "4"
+            ingress: all
+            sa_email: bert-family-cloudrun-sa@bert-family.iam.gserviceaccount.com
+
+          - service_name: db-pedia-bert-base-uncased-seed-3
+            region: us-central1
+            project_id: bert-family
+            repo: bert-family-prod
+            image_name: db-pedia-bert-base-uncased-seed-3
+            image_tag: 1.0.0
+            context_path: DB_Pedia/bert-base-uncased/seed=3
+            platform: linux/amd64
+            memory: 2Gi
+            cpu: "2"
+            concurrency: "32"
+            timeout: 300s
+            min_instances: "0"
+            max_instances: "4"
+            ingress: all
+            sa_email: bert-family-cloudrun-sa@bert-family.iam.gserviceaccount.com
+
+          - service_name: db-pedia-distilbert-base-uncased-seed-1
+            region: us-central1
+            project_id: bert-family
+            repo: bert-family-prod
+            image_name: db-pedia-distilbert-base-uncased-seed-1
+            image_tag: 1.0.0
+            context_path: DB_Pedia/distilbert-base-uncased/seed=1
+            platform: linux/amd64
+            memory: 2Gi
+            cpu: "2"
+            concurrency: "32"
+            timeout: 300s
+            min_instances: "0"
+            max_instances: "4"
+            ingress: all
+            sa_email: bert-family-cloudrun-sa@bert-family.iam.gserviceaccount.com
+
+          - service_name: db-pedia-distilbert-base-uncased-seed-2
+            region: us-central1
+            project_id: bert-family
+            repo: bert-family-prod
+            image_name: db-pedia-distilbert-base-uncased-seed-2
+            image_tag: 1.0.0
+            context_path: DB_Pedia/distilbert-base-uncased/seed=2
+            platform: linux/amd64
+            memory: 2Gi
+            cpu: "2"
+            concurrency: "32"
+            timeout: 300s
+            min_instances: "0"
+            max_instances: "4"
+            ingress: all
+            sa_email: bert-family-cloudrun-sa@bert-family.iam.gserviceaccount.com
+
+          - service_name: db-pedia-distilbert-base-uncased-seed-3
+            region: us-central1
+            project_id: bert-family
+            repo: bert-family-prod
+            image_name: db-pedia-distilbert-base-uncased-seed-3
+            image_tag: 1.0.0
+            context_path: DB_Pedia/distilbert-base-uncased/seed=3
+            platform: linux/amd64
+            memory: 2Gi
+            cpu: "2"
+            concurrency: "32"
+            timeout: 300s
+            min_instances: "0"
+            max_instances: "4"
+            ingress: all
+            sa_email: bert-family-cloudrun-sa@bert-family.iam.gserviceaccount.com
+
+          - service_name: db-pedia-roberta-base-seed-1
+            region: us-central1
+            project_id: bert-family
+            repo: bert-family-prod
+            image_name: db-pedia-roberta-base-seed-1
+            image_tag: 1.0.0
+            context_path: DB_Pedia/roberta-base/seed=1
+            platform: linux/amd64
+            memory: 2Gi
+            cpu: "2"
+            concurrency: "32"
+            timeout: 300s
+            min_instances: "0"
+            max_instances: "4"
+            ingress: all
+            sa_email: bert-family-cloudrun-sa@bert-family.iam.gserviceaccount.com
+
+          - service_name: db-pedia-roberta-base-seed-2
+            region: us-central1
+            project_id: bert-family
+            repo: bert-family-prod
+            image_name: db-pedia-roberta-base-seed-2
+            image_tag: 1.0.0
+            context_path: DB_Pedia/roberta-base/seed=2
+            platform: linux/amd64
+            memory: 2Gi
+            cpu: "2"
+            concurrency: "32"
+            timeout: 300s
+            min_instances: "0"
+            max_instances: "4"
+            ingress: all
+            sa_email: bert-family-cloudrun-sa@bert-family.iam.gserviceaccount.com
+
+          - service_name: db-pedia-roberta-base-seed-3
+            region: us-central1
+            project_id: bert-family
+            repo: bert-family-prod
+            image_name: db-pedia-roberta-base-seed-3
+            image_tag: 1.0.0
+            context_path: DB_Pedia/roberta-base/seed=3
+            platform: linux/amd64
+            memory: 2Gi
+            cpu: "2"
+            concurrency: "32"
+            timeout: 300s
+            min_instances: "0"
+            max_instances: "4"
+            ingress: all
+            sa_email: bert-family-cloudrun-sa@bert-family.iam.gserviceaccount.com
+
+          # =========================
+          # IMDB (9)
+          # =========================
+          - service_name: imdb-bert-base-uncased-seed-1
+            region: us-central1
+            project_id: bert-family
+            repo: bert-family-prod
+            image_name: imdb-bert-base-uncased-seed-1
+            image_tag: 1.0.0
+            context_path: IMDB/bert-base-uncased/seed=1
+            platform: linux/amd64
+            memory: 2Gi
+            cpu: "2"
+            concurrency: "32"
+            timeout: 300s
+            min_instances: "0"
+            max_instances: "4"
+            ingress: all
+            sa_email: bert-family-cloudrun-sa@bert-family.iam.gserviceaccount.com
+
+          - service_name: imdb-bert-base-uncased-seed-2
+            region: us-central1
+            project_id: bert-family
+            repo: bert-family-prod
+            image_name: imdb-bert-base-uncased-seed-2
+            image_tag: 1.0.0
+            context_path: IMDB/bert-base-uncased/seed=2
+            platform: linux/amd64
+            memory: 2Gi
+            cpu: "2"
+            concurrency: "32"
+            timeout: 300s
+            min_instances: "0"
+            max_instances: "4"
+            ingress: all
+            sa_email: bert-family-cloudrun-sa@bert-family.iam.gserviceaccount.com
+
+          - service_name: imdb-bert-base-uncased-seed-3
+            region: us-central1
+            project_id: bert-family
+            repo: bert-family-prod
+            image_name: imdb-bert-base-uncased-seed-3
+            image_tag: 1.0.0
+            context_path: IMDB/bert-base-uncased/seed=3
+            platform: linux/amd64
+            memory: 2Gi
+            cpu: "2"
+            concurrency: "32"
+            timeout: 300s
+            min_instances: "0"
+            max_instances: "4"
+            ingress: all
+            sa_email: bert-family-cloudrun-sa@bert-family.iam.gserviceaccount.com
+
+          - service_name: imdb-distilbert-base-uncased-seed-1
+            region: us-central1
+            project_id: bert-family
+            repo: bert-family-prod
+            image_name: imdb-distilbert-base-uncased-seed-1
+            image_tag: 1.0.0
+            context_path: IMDB/distilbert-base-uncased/seed=1
+            platform: linux/amd64
+            memory: 2Gi
+            cpu: "2"
+            concurrency: "32"
+            timeout: 300s
+            min_instances: "0"
+            max_instances: "4"
+            ingress: all
+            sa_email: bert-family-cloudrun-sa@bert-family.iam.gserviceaccount.com
+
+          - service_name: imdb-distilbert-base-uncased-seed-2
+            region: us-central1
+            project_id: bert-family
+            repo: bert-family-prod
+            image_name: imdb-distilbert-base-uncased-seed-2
+            image_tag: 1.0.0
+            context_path: IMDB/distilbert-base-uncased/seed=2
+            platform: linux/amd64
+            memory: 2Gi
+            cpu: "2"
+            concurrency: "32"
+            timeout: 300s
+            min_instances: "0"
+            max_instances: "4"
+            ingress: all
+            sa_email: bert-family-cloudrun-sa@bert-family.iam.gserviceaccount.com
+
+          - service_name: imdb-distilbert-base-uncased-seed-3
+            region: us-central1
+            project_id: bert-family
+            repo: bert-family-prod
+            image_name: imdb-distilbert-base-uncased-seed-3
+            image_tag: 1.0.0
+            context_path: IMDB/distilbert-base-uncased/seed=3
+            platform: linux/amd64
+            memory: 2Gi
+            cpu: "2"
+            concurrency: "32"
+            timeout: 300s
+            min_instances: "0"
+            max_instances: "4"
+            ingress: all
+            sa_email: bert-family-cloudrun-sa@bert-family.iam.gserviceaccount.com
+
+          - service_name: imdb-roberta-base-seed-1
+            region: us-central1
+            project_id: bert-family
+            repo: bert-family-prod
+            image_name: imdb-roberta-base-seed-1
+            image_tag: 1.0.0
+            context_path: IMDB/roberta-base/seed=1
+            platform: linux/amd64
+            memory: 2Gi
+            cpu: "2"
+            concurrency: "32"
+            timeout: 300s
+            min_instances: "0"
+            max_instances: "4"
+            ingress: all
+            sa_email: bert-family-cloudrun-sa@bert-family.iam.gserviceaccount.com
+
+          - service_name: imdb-roberta-base-seed-2
+            region: us-central1
+            project_id: bert-family
+            repo: bert-family-prod
+            image_name: imdb-roberta-base-seed-2
+            image_tag: 1.0.0
+            context_path: IMDB/roberta-base/seed=2
+            platform: linux/amd64
+            memory: 2Gi
+            cpu: "2"
+            concurrency: "32"
+            timeout: 300s
+            min_instances: "0"
+            max_instances: "4"
+            ingress: all
+            sa_email: bert-family-cloudrun-sa@bert-family.iam.gserviceaccount.com
+
+          - service_name: imdb-roberta-base-seed-3
+            region: us-central1
+            project_id: bert-family
+            repo: bert-family-prod
+            image_name: imdb-roberta-base-seed-3
+            image_tag: 1.0.0
+            context_path: IMDB/roberta-base/seed=3
+            platform: linux/amd64
+            memory: 2Gi
+            cpu: "2"
+            concurrency: "32"
+            timeout: 300s
+            min_instances: "0"
+            max_instances: "4"
+            ingress: all
+            sa_email: bert-family-cloudrun-sa@bert-family.iam.gserviceaccount.com
+
+          # =========================
+          # SSTv2 (9)
+          # =========================
+          - service_name: sstv2-bert-base-uncased-seed-1
+            region: us-central1
+            project_id: bert-family
+            repo: bert-family-prod
+            image_name: sstv2-bert-base-uncased-seed-1
+            image_tag: 1.0.0
+            context_path: SSTv2/bert-base-uncased/seed=1
+            platform: linux/amd64
+            memory: 2Gi
+            cpu: "2"
+            concurrency: "32"
+            timeout: 300s
+            min_instances: "0"
+            max_instances: "4"
+            ingress: all
+            sa_email: bert-family-cloudrun-sa@bert-family.iam.gserviceaccount.com
+
+          - service_name: sstv2-bert-base-uncased-seed-2
+            region: us-central1
+            project_id: bert-family
+            repo: bert-family-prod
+            image_name: sstv2-bert-base-uncased-seed-2
+            image_tag: 1.0.0
+            context_path: SSTv2/bert-base-uncased/seed=2
+            platform: linux/amd64
+            memory: 2Gi
+            cpu: "2"
+            concurrency: "32"
+            timeout: 300s
+            min_instances: "0"
+            max_instances: "4"
+            ingress: all
+            sa_email: bert-family-cloudrun-sa@bert-family.iam.gserviceaccount.com
+
+          - service_name: sstv2-bert-base-uncased-seed-3
+            region: us-central1
+            project_id: bert-family
+            repo: bert-family-prod
+            image_name: sstv2-bert-base-uncased-seed-3
+            image_tag: 1.0.0
+            context_path: SSTv2/bert-base-uncased/seed=3
+            platform: linux/amd64
+            memory: 2Gi
+            cpu: "2"
+            concurrency: "32"
+            timeout: 300s
+            min_instances: "0"
+            max_instances: "4"
+            ingress: all
+            sa_email: bert-family-cloudrun-sa@bert-family.iam.gserviceaccount.com
+
+          - service_name: sstv2-distilbert-base-uncased-seed-1
+            region: us-central1
+            project_id: bert-family
+            repo: bert-family-prod
+            image_name: sstv2-distilbert-base-uncased-seed-1
+            image_tag: 1.0.0
+            context_path: SSTv2/distilbert-base-uncased/seed=1
+            platform: linux/amd64
+            memory: 2Gi
+            cpu: "2"
+            concurrency: "32"
+            timeout: 300s
+            min_instances: "0"
+            max_instances: "4"
+            ingress: all
+            sa_email: bert-family-cloudrun-sa@bert-family.iam.gserviceaccount.com
+
+          - service_name: sstv2-distilbert-base-uncased-seed-2
+            region: us-central1
+            project_id: bert-family
+            repo: bert-family-prod
+            image_name: sstv2-distilbert-base-uncased-seed-2
+            image_tag: 1.0.0
+            context_path: SSTv2/distilbert-base-uncased/seed=2
+            platform: linux/amd64
+            memory: 2Gi
+            cpu: "2"
+            concurrency: "32"
+            timeout: 300s
+            min_instances: "0"
+            max_instances: "4"
+            ingress: all
+            sa_email: bert-family-cloudrun-sa@bert-family.iam.gserviceaccount.com
+
+          - service_name: sstv2-distilbert-base-uncased-seed-3
+            region: us-central1
+            project_id: bert-family
+            repo: bert-family-prod
+            image_name: sstv2-distilbert-base-uncased-seed-3
+            image_tag: 1.0.0
+            context_path: SSTv2/distilbert-base-uncased/seed=3
+            platform: linux/amd64
+            memory: 2Gi
+            cpu: "2"
+            concurrency: "32"
+            timeout: 300s
+            min_instances: "0"
+            max_instances: "4"
+            ingress: all
+            sa_email: bert-family-cloudrun-sa@bert-family.iam.gserviceaccount.com
+
+          - service_name: sstv2-roberta-base-seed-1
+            region: us-central1
+            project_id: bert-family
+            repo: bert-family-prod
+            image_name: sstv2-roberta-base-seed-1
+            image_tag: 1.0.0
+            context_path: SSTv2/roberta-base/seed=1
+            platform: linux/amd64
+            memory: 2Gi
+            cpu: "2"
+            concurrency: "32"
+            timeout: 300s
+            min_instances: "0"
+            max_instances: "4"
+            ingress: all
+            sa_email: bert-family-cloudrun-sa@bert-family.iam.gserviceaccount.com
+
+          - service_name: sstv2-roberta-base-seed-2
+            region: us-central1
+            project_id: bert-family
+            repo: bert-family-prod
+            image_name: sstv2-roberta-base-seed-2
+            image_tag: 1.0.0
+            context_path: SSTv2/roberta-base/seed=2
+            platform: linux/amd64
+            memory: 2Gi
+            cpu: "2"
+            concurrency: "32"
+            timeout: 300s
+            min_instances: "0"
+            max_instances: "4"
+            ingress: all
+            sa_email: bert-family-cloudrun-sa@bert-family.iam.gserviceaccount.com
+
+          - service_name: sstv2-roberta-base-seed-3
+            region: us-central1
+            project_id: bert-family
+            repo: bert-family-prod
+            image_name: sstv2-roberta-base-seed-3
+            image_tag: 1.0.0
+            context_path: SSTv2/roberta-base/seed=3
             platform: linux/amd64
             memory: 2Gi
             cpu: "2"
@@ -89,6 +700,8 @@ jobs:
 
       - name: Post-deploy URL
         run: |
+          echo "Service: ${{ matrix.service_name }}"
           gcloud run services describe ${{ matrix.service_name }} \
             --region=${{ matrix.region }} --project=${{ matrix.project_id }} \
             --format='value(status.url)'
+
